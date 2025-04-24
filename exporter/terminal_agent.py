@@ -37,7 +37,7 @@ async def terminal_handler(websocket):
 
 
 async def export_terminal():
-    async with websockets.serve(terminal_handler, "localhost", 8765):
+    async with websockets.serve(terminal_handler, "0.0.0.0", 8765):
         await asyncio.Future()
 
 
