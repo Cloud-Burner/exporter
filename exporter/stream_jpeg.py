@@ -23,5 +23,7 @@ async def stream_camera():
             await asyncio.sleep(1 / 15)  # 15 fps
 
 
+def start_server():
+    asyncio.run(stream_camera())
 if __name__ == "__main__":
     asyncio.run(stream_camera())

@@ -1,7 +1,7 @@
 import typer
 
 from exporter.terminal_agent import start_exporter
-from exporter.stream_jpeg import stream_camera
+from exporter.stream_jpeg import start_server
 
 app = typer.Typer()
 
@@ -26,10 +26,10 @@ def run(
         raise typer.Exit(code=1)
     match export:
         case "all":
-            stream_camera()
+            start_server()
             start_exporter()
         case "video":
-            stream_camera()
+            start_server()
         case "terminal":
             print("rem")
             start_exporter()
