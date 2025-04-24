@@ -2,12 +2,12 @@ import asyncio
 
 from aiohttp import web
 from aiortc import RTCPeerConnection, RTCSessionDescription
-from aiortc.contrib.media import MediaPlayer, MediaRelay
+from aiortc.contrib.media import MediaRelay
 
 pcs = set()
 relay = MediaRelay()
 
-player = MediaPlayer("/dev/video0", format="v4l2", options={"video_size": "640x480"})
+# player = MediaPlayer("/dev/video0", format="v4l2", options={"video_size": "640x480"})
 
 
 async def offer(request):
