@@ -13,6 +13,7 @@ aiortc = "^1.11.0"
 ruff = "^0.11.6"
 websockets = "^15.0.1"
 opencv-python = "^4.11.0.86"
+loguru = "^0.7.3"
 
 
 [build-system]

@@ -1,39 +1,44 @@
-import typer
-
-from exporter.terminal_agent import start_exporter
+import argparse
+import sys
+from exporter.terminal_agent import run as terminal_agent_run
 from exporter.stream_jpeg import start_server
 
-app = typer.Typer()
+def main():
+    parser = argparse.ArgumentParser(
+        description="Экспортёр терминала: режимы работы all / stream / term"
+    )
 
-
-@app.command()
-def run(
-    export: str = typer.Option(
-        ...,  # означает, что флаг обязателен
+    parser.add_argument(
         "--export",
-        help="Что экспортировать: all, video, terminal",
-        show_default=False,
-        case_sensitive=False,
-    ),
-):
-    allowed = {"all", "video", "terminal"}
-    export = export.lower()
+        type=str,
+        choices=["all", "stream", "term"],
+        required=True,
+        help="Режим экспорта: all, stream, или term"
+    )
 
-    if export not in allowed:
-        typer.secho(
-            f"Ошибка: недопустимое значение --export: {export}", fg=typer.colors.RED
-        )
-        raise typer.Exit(code=1)
-    match export:
-        case "all":
-            start_server()
-            start_exporter()
-        case "video":
-            start_server()
-        case "terminal":
-            print("rem")
-            start_exporter()
+    parser.add_argument(
+        "--server",
+        type=str,
+        required=True,
+        help="Адрес сервера для подключения, например ws://localhost:8000"
+    )
+
+    args = parser.parse_args()
+
+    if args.export == "all":
+        terminal_agent_run()
+        start_server()
+
+    elif args.export == "stream":
+        start_server()
+
+    elif args.export == "term":
+        terminal_agent_run()
+
+    else:
+        print(f"Неизвестный режим экспорта: {args.export}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    app()
+    main()
