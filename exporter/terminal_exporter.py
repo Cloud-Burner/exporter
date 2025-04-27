@@ -6,7 +6,8 @@ import signal
 import sys
 from loguru import logger
 
-BACKEND_URL = "ws://localhost:8001/terminal/exporter"
+BACKEND_URL = "ws://localhost:8001/terminal/exporter?token=terminal"
+# BACKEND_URL = "ws://192.168.1.39:8001/terminal/exporter?token=terminal"
 HEARTBEAT_INTERVAL = 10
 
 fd = None
@@ -69,7 +70,10 @@ def shutdown(signal_received, frame):
     sys.exit(0)
 
 
-def run():
+def start_terminal():
     signal.signal(signal.SIGINT, shutdown)
     signal.signal(signal.SIGTERM, shutdown)
     asyncio.run(terminal_exporter())
+
+if __name__ == "__main__":
+    start_terminal()

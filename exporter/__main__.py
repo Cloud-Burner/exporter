@@ -1,7 +1,7 @@
 import argparse
 import sys
-from exporter.terminal_agent import run as terminal_agent_run
-from exporter.stream_jpeg import start_server
+from exporter.terminal_exporter import start_terminal
+from exporter.stream_exporter import start_camera_stream
 
 def main():
     parser = argparse.ArgumentParser(
@@ -19,21 +19,21 @@ def main():
     parser.add_argument(
         "--server",
         type=str,
-        required=True,
+        required=False,
         help="Адрес сервера для подключения, например ws://localhost:8000"
     )
 
     args = parser.parse_args()
 
     if args.export == "all":
-        terminal_agent_run()
-        start_server()
+        start_terminal()
+        start_camera_stream()
 
     elif args.export == "stream":
-        start_server()
+        start_camera_stream()
 
     elif args.export == "term":
-        terminal_agent_run()
+        start_terminal()
 
     else:
         print(f"Неизвестный режим экспорта: {args.export}")
